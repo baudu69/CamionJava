@@ -9,7 +9,7 @@ public class Camion {
     private final ArrayList<Tranche> lesTranches;
 
     public Camion(int longueur, int largeur, int hauteur) {
-        this.longueur = hauteur;
+        this.longueur = longueur;
         this.largeur = largeur;
         this.hauteur = hauteur;
         lesTranches = new ArrayList<>();

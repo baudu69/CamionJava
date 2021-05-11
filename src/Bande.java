@@ -5,12 +5,14 @@ public class Bande {
     private int longueur;
     private int largeur;
     private int hauteur;
+    private int hauteurRestante;
     private final ArrayList<Carton> lesCartons;
 
     public Bande(int longueur, int largeur, int hauteur) {
         this.longueur = hauteur;
         this.largeur = largeur;
         this.hauteur = hauteur;
+        this.hauteurRestante = hauteur;
         lesCartons = new ArrayList<>();
     }
 
@@ -20,6 +22,7 @@ public class Bande {
             lesCartonsCompatibles.sort(Comparator.comparing(Carton::getVolume));
             Carton cartonAAjouter = lesCartonsCompatibles.get(lesCartonsCompatibles.size() - 1);
             lesCartons.add(cartonAAjouter);
+            hauteurRestante -= cartonAAjouter.getHauteur();
             lesCartonsRestants.remove(cartonAAjouter);
             lesCartonsCompatibles = getCartonCompatible(lesCartonsRestants);
         }
@@ -37,19 +40,11 @@ public class Bande {
             largeur = lesCartons.get(lesCartons.size() - 1).getLargeur();
         }
         for (Carton unCarton: lesCartonsRestants) {
-            if ((unCarton.getLargeur() <= largeur) && (unCarton.getLongueur() <= longueur) && (unCarton.getHauteur() + getHauteurActuelle() < hauteur)) {
+            if ((unCarton.getLargeur() <= largeur) && (unCarton.getLongueur() <= longueur) && (unCarton.getHauteur() < hauteurRestante)) {
                 lesCartonsCompatibles.add(unCarton);
             }
         }
         return lesCartonsCompatibles;
-    }
-
-    private int getHauteurActuelle() {
-        int hauteur = 0;
-        for (Carton unCarton: lesCartons) {
-            hauteur += unCarton.getHauteur();
-        }
-        return hauteur;
     }
 
     public int getLongueur() {

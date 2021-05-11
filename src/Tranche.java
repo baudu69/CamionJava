@@ -20,8 +20,9 @@ public class Tranche {
         while (lesCartonsCompatibles.size() != 0) {
             lesCartonsCompatibles.sort(Comparator.comparing(Carton::getVolume));
             Carton cartonAAjouter = lesCartonsCompatibles.get(lesCartonsCompatibles.size() - 1);
-            Bande uneBande = new Bande(cartonAAjouter.getLongueur(), cartonAAjouter.getLargeur(), cartonAAjouter.getHauteur());
+            Bande uneBande = new Bande(cartonAAjouter.getLongueur(), cartonAAjouter.getLargeur(), hauteur);
             uneBande.remplirBande(lesCartonsCompatibles);
+            lesCartonsRestants.removeAll(uneBande.getLesCartons());
             lesBandes.add(uneBande);
         }
     }
