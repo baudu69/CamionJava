@@ -1,17 +1,16 @@
 import java.util.ArrayList;
 
-public class Tranche {
+public class Bande {
     private int longueur;
     private int largeur;
     private int hauteur;
-    private final ArrayList<Bande> lesBandes;
+    private final ArrayList<Carton> lesCartons;
 
-
-    public Tranche(int longueur, int largeur, int hauteur) {
+    public Bande(int longueur, int largeur, int hauteur) {
         this.longueur = hauteur;
         this.largeur = largeur;
         this.hauteur = hauteur;
-        lesBandes = new ArrayList<>();
+        lesCartons = new ArrayList<>();
     }
 
     public int getLongueur() {
@@ -39,14 +38,6 @@ public class Tranche {
     }
 
     public ArrayList<Carton> getLesCartons() {
-        ArrayList<Carton> lesCartons = new ArrayList<>();
-        for (Bande uneBande: lesBandes) {
-            lesCartons.addAll(uneBande.getLesCartons());
-        }
         return lesCartons;
-    }
-
-    public ArrayList<Bande> getLesBandes() {
-        return lesBandes;
     }
 }
