@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Lecture {
 
-    public Camion getCamion(String nomFichier) {
+    public static Camion getCamion(String nomFichier) {
         File file = new File(nomFichier + ".txt");
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -21,7 +21,7 @@ public class Lecture {
         return null;
     }
 
-    public ArrayList<Carton> getCarton(String nomFichier) {
+    public static ArrayList<Carton> getCarton(String nomFichier) {
         File file = new File(nomFichier + ".txt");
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
