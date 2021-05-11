@@ -5,7 +5,7 @@ public class Carton {
     private double volume;
 
     public Carton(int longueur, int largeur, int hauteur) {
-        this.longueur = hauteur;
+        this.longueur = longueur;
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.volume = ((double)longueur/100)*((double)largeur/100)*((double)hauteur/100);

@@ -9,7 +9,7 @@ public class Tranche {
 
 
     public Tranche(int longueur, int largeur, int hauteur) {
-        this.longueur = hauteur;
+        this.longueur = longueur;
         this.largeur = largeur;
         this.hauteur = hauteur;
         lesBandes = new ArrayList<>();

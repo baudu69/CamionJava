@@ -9,7 +9,7 @@ public class Bande {
     private final ArrayList<Carton> lesCartons;
 
     public Bande(int longueur, int largeur, int hauteur) {
-        this.longueur = hauteur;
+        this.longueur = longueur;
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.hauteurRestante = hauteur;
