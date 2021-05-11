@@ -40,7 +40,7 @@ public class Bande {
             largeur = lesCartons.get(lesCartons.size() - 1).getLargeur();
         }
         for (Carton unCarton: lesCartonsRestants) {
-            if ((unCarton.getLargeur() <= largeur) && (unCarton.getLongueur() <= longueur) && (unCarton.getHauteur() < hauteurRestante)) {
+            if ((unCarton.getLargeur() <= largeur) && (unCarton.getLongueur() <= longueur) && (unCarton.getHauteur() <= hauteurRestante)) {
                 lesCartonsCompatibles.add(unCarton);
             }
         }

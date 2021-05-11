@@ -20,7 +20,7 @@ public class Camion {
         while (lesCartonsCompatibles.size() != 0) {
             lesCartonsCompatibles.sort(Comparator.comparing(Carton::getVolume));
             Carton carton1 = lesCartonsCompatibles.get(lesCartonsCompatibles.size() - 1);
-            Tranche uneTranche = new Tranche(carton1.getLargeur(), carton1.getLongueur(), hauteur);
+            Tranche uneTranche = new Tranche(largeur, carton1.getLongueur(), hauteur);
             uneTranche.remplirTranche(lesCartons);
             lesTranches.add(uneTranche);
             lesCartonsCompatibles = getLesCartonsCompatibles(lesCartons);
@@ -31,7 +31,7 @@ public class Camion {
     private ArrayList<Carton> getLesCartonsCompatibles(ArrayList<Carton> lesCartons) {
         ArrayList<Carton> lesCartonsCompatibles = new ArrayList<>();
         for (Carton unCarton: lesCartons) {
-            if (unCarton.getLongueur() + getLongueurActuelle() < longueur) {
+            if (unCarton.getLongueur() + getLongueurActuelle() <= longueur) {
                 lesCartonsCompatibles.add(unCarton);
             }
         }
