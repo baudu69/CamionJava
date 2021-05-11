@@ -11,6 +11,12 @@ public class Carton {
         this.volume = ((double)longueur/100)*((double)largeur/100)*((double)hauteur/100);
     }
 
+    public void Tourner() {
+        int lBis = largeur;
+        largeur = longueur;
+        longueur = lBis;
+    }
+
     public int getLongueur() {
         return longueur;
     }
