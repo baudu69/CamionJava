@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Bande {
     private int longueur;
@@ -11,6 +12,44 @@ public class Bande {
         this.largeur = largeur;
         this.hauteur = hauteur;
         lesCartons = new ArrayList<>();
+    }
+
+    public void remplirBande(ArrayList<Carton> lesCartonsRestants) {
+        ArrayList<Carton> lesCartonsCompatibles = getCartonCompatible(lesCartonsRestants);
+        while (lesCartonsCompatibles.size() != 0) {
+            lesCartonsCompatibles.sort(Comparator.comparing(Carton::getVolume));
+            Carton cartonAAjouter = lesCartonsCompatibles.get(lesCartonsCompatibles.size() - 1);
+            lesCartons.add(cartonAAjouter);
+            lesCartonsRestants.remove(cartonAAjouter);
+            lesCartonsCompatibles = getCartonCompatible(lesCartonsRestants);
+        }
+
+    }
+
+    private ArrayList<Carton> getCartonCompatible(ArrayList<Carton> lesCartonsRestants) {
+        ArrayList<Carton> lesCartonsCompatibles = new ArrayList<>();
+        int longueur, largeur;
+        if (lesCartons.size() == 0) {
+            longueur = this.longueur;
+            largeur = this.largeur;
+        } else {
+            longueur = lesCartons.get(lesCartons.size() - 1).getLongueur();
+            largeur = lesCartons.get(lesCartons.size() - 1).getLargeur();
+        }
+        for (Carton unCarton: lesCartonsRestants) {
+            if ((unCarton.getLargeur() <= largeur) && (unCarton.getLongueur() <= longueur) && (unCarton.getHauteur() + getHauteurActuelle() < hauteur)) {
+                lesCartonsCompatibles.add(unCarton);
+            }
+        }
+        return lesCartonsCompatibles;
+    }
+
+    private int getHauteurActuelle() {
+        int hauteur = 0;
+        for (Carton unCarton: lesCartons) {
+            hauteur += unCarton.getHauteur();
+        }
+        return hauteur;
     }
 
     public int getLongueur() {

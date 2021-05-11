@@ -14,6 +14,14 @@ public class Tranche {
         lesBandes = new ArrayList<>();
     }
 
+    public void remplirTranche() {
+
+    }
+
+    private int getLongueurRestante() {
+
+    }
+
     public int getLongueur() {
         return longueur;
     }

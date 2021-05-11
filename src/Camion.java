@@ -23,6 +23,10 @@ public class Camion {
         return newTranche;
     }
 
+    public void remplirCamion(ArrayList<Carton> lesCartons) {
+
+    }
+
     public int getLongueur() {
         return longueur;
     }
