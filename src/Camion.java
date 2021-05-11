@@ -15,12 +15,35 @@ public class Camion {
         lesTranches = new ArrayList<>();
     }
 
-    public Tranche ajouterTranche(ArrayList<Carton> lesCartonsRestants) {
-        lesCartonsRestants.sort(Comparator.comparing(Carton::getVolume));
-        Carton Carton1 = lesCartonsRestants.get(0);
-        Tranche newTranche = new Tranche(this.largeur, Carton1.getLargeur(), hauteur);
-        lesTranches.add(newTranche);
-        return newTranche;
+    public void remplirCamion(ArrayList<Carton> lesCartons) {
+        ArrayList<Carton> lesCartonsCompatibles = getLesCartonsCompatibles(lesCartons);
+        while (lesCartonsCompatibles.size() != 0) {
+            lesCartonsCompatibles.sort(Comparator.comparing(Carton::getVolume));
+            Carton carton1 = lesCartonsCompatibles.get(lesCartonsCompatibles.size() - 1);
+            Tranche uneTranche = new Tranche(carton1.getLargeur(), carton1.getLongueur(), hauteur);
+            uneTranche.remplirTranche(lesCartons);
+            lesTranches.add(uneTranche);
+            lesCartonsCompatibles = getLesCartonsCompatibles(lesCartons);
+        }
+
+    }
+
+    private ArrayList<Carton> getLesCartonsCompatibles(ArrayList<Carton> lesCartons) {
+        ArrayList<Carton> lesCartonsCompatibles = new ArrayList<>();
+        for (Carton unCarton: lesCartons) {
+            if (unCarton.getLongueur() + getLongueurActuelle() < longueur) {
+                lesCartonsCompatibles.add(unCarton);
+            }
+        }
+        return lesCartonsCompatibles;
+    }
+
+    private int getLongueurActuelle() {
+        int longueurActuelle = 0;
+        for (Tranche uneTranche: lesTranches) {
+            longueurActuelle += uneTranche.getLargeur();
+        }
+        return longueurActuelle;
     }
 
     public int getLongueur() {
