@@ -50,4 +50,12 @@ public class Camion {
     public ArrayList<Tranche> getLesTranches() {
         return lesTranches;
     }
+
+    public ArrayList<Carton> getLesCartons() {
+        ArrayList<Carton> lesCartons = new ArrayList<>();
+        for (Tranche uneTranche: lesTranches) {
+            lesCartons.addAll(uneTranche.getLesCartons());
+        }
+        return lesCartons;
+    }
 }
