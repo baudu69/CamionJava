@@ -20,11 +20,26 @@ public class Camion {
         while (lesCartonsCompatibles.size() != 0) {
             lesCartonsCompatibles.sort(Comparator.comparing(Carton::getVolume));
             Carton carton1 = lesCartonsCompatibles.get(lesCartonsCompatibles.size() - 1);
-            Tranche uneTranche = new Tranche(largeur, carton1.getLongueur(), hauteur);
+            Tranche uneTranche = new Tranche(carton1.getLongueur(), largeur, hauteur);
             uneTranche.remplirTranche(lesCartons);
             lesTranches.add(uneTranche);
             lesCartonsCompatibles = getLesCartonsCompatibles(lesCartons);
         }
+
+    }
+
+    public Double getTauxRemplissage() {
+        double VolumeColis = 0;
+        int longueuradditionetranche = 0;
+        for (Tranche uneTranche: lesTranches) {
+            for (Carton unCarton: uneTranche.getLesCartons()) {
+                VolumeColis += unCarton.getVolume();
+            }
+            longueuradditionetranche += uneTranche.getLongueur();
+        }
+        double Total = ((double)longueuradditionetranche/100)*((double)largeur/100)*((double)hauteur/100);
+        double tauxRemplissage = VolumeColis/Total;
+        return tauxRemplissage;
 
     }
 
@@ -41,7 +56,7 @@ public class Camion {
     private int getLongueurActuelle() {
         int longueurActuelle = 0;
         for (Tranche uneTranche: lesTranches) {
-            longueurActuelle += uneTranche.getLargeur();
+            longueurActuelle += uneTranche.getLongueur();
         }
         return longueurActuelle;
     }

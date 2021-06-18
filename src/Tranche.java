@@ -5,7 +5,7 @@ public class Tranche {
     private int longueur;
     private int largeur;
     private int hauteur;
-    private int longueurRestante;
+    private int largeurRestante;
     private final ArrayList<Bande> lesBandes;
 
 
@@ -13,7 +13,7 @@ public class Tranche {
         this.longueur = longueur;
         this.largeur = largeur;
         this.hauteur = hauteur;
-        this.longueurRestante = longueur;
+        this.largeurRestante = largeur;
         lesBandes = new ArrayList<>();
     }
 
@@ -23,10 +23,11 @@ public class Tranche {
             lesCartonsCompatibles.sort(Comparator.comparing(Carton::getVolume));
             Carton cartonAAjouter = lesCartonsCompatibles.get(lesCartonsCompatibles.size() - 1);
             Bande uneBande = new Bande(cartonAAjouter.getLongueur(), cartonAAjouter.getLargeur(), hauteur);
-            longueurRestante -= uneBande.getLargeur();
+            largeurRestante -= uneBande.getLargeur();
             uneBande.remplirBande(lesCartonsCompatibles);
             lesCartonsRestants.removeAll(uneBande.getLesCartons());
             lesBandes.add(uneBande);
+            lesCartonsCompatibles = getCartonsCompatibles(lesCartonsRestants);
         }
     }
 
@@ -36,11 +37,11 @@ public class Tranche {
             longueur = this.longueur;
             largeur = this.largeur;
         } else {
-            longueur = lesBandes.get(lesBandes.size() - 1).getLargeur();
+            longueur = lesBandes.get(lesBandes.size() - 1).getLongueur();
             largeur = lesBandes.get(lesBandes.size() - 1).getLongueur();
         }
         for (Carton unCarton: lesCartonsRestants) {
-            if ((unCarton.getLongueur() <= largeur) && (unCarton.getLargeur() <= longueurRestante)) {
+            if ((unCarton.getLongueur() <= longueur) && (unCarton.getLargeur() <= largeurRestante)) {
                 lesCartonsCompatibles.add(unCarton);
             }
         }

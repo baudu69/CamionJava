@@ -5,8 +5,9 @@ public class Main {
 
         Camion camion = Lecture.getCamion("entree");
         ArrayList<Carton> lesCartons = Lecture.getCarton("entree");
+        assert camion != null;
         camion.remplirCamion(lesCartons);
-        System.out.println(camion.getLesCartons().size());
+        System.out.println(camion.getTauxRemplissage());
 
     }
 }
