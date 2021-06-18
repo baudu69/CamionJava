@@ -6,6 +6,7 @@ public class Camion {
     private int longueur;
     private int largeur;
     private int hauteur;
+    private double volume;
     private final ArrayList<Tranche> lesTranches;
 
     public Camion(int longueur, int largeur, int hauteur) {
@@ -13,12 +14,13 @@ public class Camion {
         this.largeur = largeur;
         this.hauteur = hauteur;
         lesTranches = new ArrayList<>();
+        this.volume = ((double)longueur/100)*((double)largeur/100)*((double)hauteur/100);
     }
 
     public void remplirCamion(ArrayList<Carton> lesCartons) {
         ArrayList<Carton> lesCartonsCompatibles = getLesCartonsCompatibles(lesCartons);
         while (lesCartonsCompatibles.size() != 0) {
-            lesCartonsCompatibles.sort(Comparator.comparing(Carton::getVolume));
+            lesCartonsCompatibles.sort(Comparator.comparing(Carton::getLongueur));
             Carton carton1 = lesCartonsCompatibles.get(lesCartonsCompatibles.size() - 1);
             Tranche uneTranche = new Tranche(carton1.getLongueur(), largeur, hauteur);
             uneTranche.remplirTranche(lesCartons);
@@ -29,23 +31,21 @@ public class Camion {
     }
 
     public Double getTauxRemplissage() {
-        double VolumeColis = 0;
-        int longueuradditionetranche = 0;
+        double volumeTranche = 0;
+        double volumeTrancheTotal = 0;
         for (Tranche uneTranche: lesTranches) {
-            for (Carton unCarton: uneTranche.getLesCartons()) {
-                VolumeColis += unCarton.getVolume();
-            }
-            longueuradditionetranche += uneTranche.getLongueur();
+                volumeTranche += uneTranche.Volume * uneTranche.tauxRemplissage;
+                volumeTrancheTotal += uneTranche.Volume;
         }
-        double Total = ((double)longueuradditionetranche/100)*((double)largeur/100)*((double)hauteur/100);
-        double tauxRemplissage = VolumeColis/Total;
-        return tauxRemplissage;
+        double Total = ((double)longueur/100)*((double)largeur/100)*((double)hauteur/100);
+        return volumeTranche/Total;
     }
 
     private ArrayList<Carton> getLesCartonsCompatibles(ArrayList<Carton> lesCartons) {
         ArrayList<Carton> lesCartonsCompatibles = new ArrayList<>();
+        int longueurActuelle = getLongueurActuelle();
         for (Carton unCarton: lesCartons) {
-            if (unCarton.getLongueur() + getLongueurActuelle() <= longueur) {
+            if (unCarton.getLongueur() + longueurActuelle <= longueur) {
                 lesCartonsCompatibles.add(unCarton);
             }
         }
@@ -94,5 +94,9 @@ public class Camion {
             lesCartons.addAll(uneTranche.getLesCartons());
         }
         return lesCartons;
+    }
+
+    public double getVolume() {
+        return volume;
     }
 }

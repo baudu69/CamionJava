@@ -6,6 +6,8 @@ public class Tranche {
     private int largeur;
     private int hauteur;
     private int largeurRestante;
+    public Double Volume;
+    public Double tauxRemplissage;
     private final ArrayList<Bande> lesBandes;
 
 
@@ -15,6 +17,7 @@ public class Tranche {
         this.hauteur = hauteur;
         this.largeurRestante = largeur;
         lesBandes = new ArrayList<>();
+        Volume = ((double)longueur/100)*((double)largeur/100)*((double)hauteur/100);
     }
 
     public void remplirTranche(ArrayList<Carton> lesCartonsRestants) {
@@ -28,11 +31,25 @@ public class Tranche {
             lesCartonsRestants.removeAll(uneBande.getLesCartons());
             lesBandes.add(uneBande);
             lesCartonsCompatibles = getCartonsCompatibles(lesCartonsRestants);
+            updateTauxRemplissage();
         }
+    }
+
+    private void updateTauxRemplissage() {
+        double VolumeColis = 0;
+        int longueuradditionetranche = 0;
+        for (Bande uneBande: lesBandes) {
+            for (Carton unCarton: uneBande.getLesCartons()) {
+                VolumeColis += unCarton.getVolume();
+            }
+        }
+
+        this.tauxRemplissage = VolumeColis/this.Volume;
     }
 
     private ArrayList<Carton> getCartonsCompatibles(ArrayList<Carton> lesCartonsRestants) {
         ArrayList<Carton> lesCartonsCompatibles = new ArrayList<>();
+        int longueur, largeur;
         if (lesBandes.size() == 0) {
             longueur = this.longueur;
             largeur = this.largeur;

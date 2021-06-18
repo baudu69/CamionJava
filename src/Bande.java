@@ -6,6 +6,8 @@ public class Bande {
     private int largeur;
     private int hauteur;
     private int hauteurRestante;
+    public Double Volume;
+    public Double tauxRemplissage;
     private final ArrayList<Carton> lesCartons;
 
     public Bande(int longueur, int largeur, int hauteur) {
@@ -14,6 +16,7 @@ public class Bande {
         this.hauteur = hauteur;
         this.hauteurRestante = hauteur;
         lesCartons = new ArrayList<>();
+        Volume = ((double)longueur/100)*((double)largeur/100)*((double)hauteur/100);
     }
 
     public void remplirBande(ArrayList<Carton> lesCartonsRestants) {
@@ -25,8 +28,18 @@ public class Bande {
             hauteurRestante -= cartonAAjouter.getHauteur();
             lesCartonsRestants.remove(cartonAAjouter);
             lesCartonsCompatibles = getCartonCompatible(lesCartonsRestants);
+            updateTauxRemplissage();
         }
 
+    }
+
+    private void updateTauxRemplissage() {
+        double VolumeColis = 0;
+        int longueuradditionetranche = 0;
+        for (Carton unCarton: lesCartons) {
+            VolumeColis += unCarton.getVolume();
+        }
+        this.tauxRemplissage = VolumeColis/this.Volume;
     }
 
     private ArrayList<Carton> getCartonCompatible(ArrayList<Carton> lesCartonsRestants) {
