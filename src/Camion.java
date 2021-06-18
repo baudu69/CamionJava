@@ -40,7 +40,6 @@ public class Camion {
         double Total = ((double)longueuradditionetranche/100)*((double)largeur/100)*((double)hauteur/100);
         double tauxRemplissage = VolumeColis/Total;
         return tauxRemplissage;
-
     }
 
     private ArrayList<Carton> getLesCartonsCompatibles(ArrayList<Carton> lesCartons) {
